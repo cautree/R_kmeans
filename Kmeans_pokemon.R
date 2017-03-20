@@ -68,3 +68,18 @@ cut.pokemon=cutree(hclust.pokemon,k=3)
 
 # Compare methods
 table(cut.pokemon, km.out$cluster)
+
+#add PCA
+# Perform scaled PCA: pr.out
+pr.out = prcomp(pokemon, scale=TRUE)
+
+# Inspect model output
+summary(pr.out)
+dim(pr.out$x)
+dim(pokemon)
+
+dim(pr.out$rotation)
+pr.out$scale
+colMeans(pokemon)
+
+biplot(pr.out)
