@@ -40,3 +40,31 @@ plot(pokemon[, c("Defense", "Speed")],
      col = km.out$cluster,
      main = paste("k-means clustering of Pokemon with", k, "clusters"),
      xlab = "Defense", ylab = "Speed")
+
+#hclust
+
+# View column means
+colMeans(pokemon)
+# View column standard deviations
+apply(pokemon,2,sd)
+
+# Scale the data
+pokemon.scaled = scale(pokemon)
+
+# Create hierarchical clustering model: hclust.pokemon
+hclust.pokemon = hclust(dist(pokemon.scaled), method="complete")
+plot(hclust.pokemon)
+
+
+#Looking at the table, it looks like the hierarchical clustering 
+#model assigns most of the observations to cluster 1, 
+#while the k-means algorithm distributes the observations relatively evenly 
+#among all clusters. It's important to note that there's no consensus on 
+#which method produces better clusters. 
+#The job of the analyst in unsupervised clustering is 
+#to observe the cluster assignments and make a judgment call as to which method provides more insights into the data
+# Apply cutree() to hclust.pokemon: cut.pokemon
+cut.pokemon=cutree(hclust.pokemon,k=3)
+
+# Compare methods
+table(cut.pokemon, km.out$cluster)
